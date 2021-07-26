@@ -64,3 +64,14 @@ create table comment(
 
 alter table comment add constraint fk_comment_user foreign key (user_id) references user(id);
 alter table comment add constraint fk_comment_news foreign key (news_id) references news(id);
+
+insert into category(name,code) value('Thể thao','the-thao');
+insert into category(name,code) value('Công nghệ','cong-nghe');
+insert into category(name,code) value('Bóng đá','bong-da');
+insert into category(name,code) value('Kinh doanh','kinh-doanh');
+insert into category(name,code) value('Giải trí','giai tri');
+
+insert into news(title,categoryid) value('Bài viết về thể thao',1);
+insert into news(title,categoryid) value('Bài viết về công nghệ',2);
+insert into news(title,categoryid) value('Bài viết về bóng đá',3);
+
