@@ -1,3 +1,5 @@
+create database jspservlet;
+
 use jspservlet;
 
 create table role(

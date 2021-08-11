@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tcc.models.NewsModel;
 import com.tcc.services.ICategoryService;
 import com.tcc.services.INewService;
 
@@ -26,8 +27,14 @@ public class HomeController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// long categoryId = 1L;
-		// req.setAttribute("news", newsService.findByCategoryId(categoryId));
+		String title ="Bài viết 4";
+		String content ="Bài viết 4 test";
+		long categoryId = 1L;
+		NewsModel newsModel = new NewsModel();
+		newsModel.setContent(content);
+		newsModel.setTitle(title);
+		newsModel.setCategoryId(categoryId);
+		newsService.save(newsModel);
 		req.setAttribute("catgories", categoryService.findAll());
 		RequestDispatcher rd = req.getRequestDispatcher("/views/client/home.jsp");
 		rd.forward(req, resp);
