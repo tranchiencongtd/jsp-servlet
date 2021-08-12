@@ -21,8 +21,7 @@ public class NewService implements INewService {
 	@Override
 	public NewsModel save(NewsModel newsModel) {
 		Long id = newsDao.save(newsModel);
-		System.out.print(id);
-		return null;
+		return newsDao.findOne(id);
 	}
 
 }

@@ -27,14 +27,6 @@ public class HomeController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String title ="Bài viết 4";
-		String content ="Bài viết 4 test";
-		long categoryId = 1L;
-		NewsModel newsModel = new NewsModel();
-		newsModel.setContent(content);
-		newsModel.setTitle(title);
-		newsModel.setCategoryId(categoryId);
-		newsService.save(newsModel);
 		req.setAttribute("catgories", categoryService.findAll());
 		RequestDispatcher rd = req.getRequestDispatcher("/views/client/home.jsp");
 		rd.forward(req, resp);

@@ -13,7 +13,7 @@ import com.tcc.models.NewsModel;
 
 public class NewsDAO extends AbstractDAO<NewsModel> implements INewsDAO {
 	@Override
-	public List<NewsModel> findByCategoryId(long categoryId) {
+	public List<NewsModel> findByCategoryId(Long categoryId) {
 		String sql = "SELECT * FROM news WHERE categoryid = ?";
 		return query(sql, new NewMapper(), categoryId);
 	}
@@ -22,5 +22,12 @@ public class NewsDAO extends AbstractDAO<NewsModel> implements INewsDAO {
 	public Long save(NewsModel newModel) {
 		String sql = "INSERT INTO news(title,content,categoryid) VALUE(?,?,?)";
 		return insert(sql, newModel.getTitle(),newModel.getContent(),newModel.getCategoryId());
+	}
+
+	@Override
+	public NewsModel findOne(Long id) {
+		String sql = "SELECT * FROM news WHERE id = ?";
+		List<NewsModel> news = query(sql, new NewMapper(), id);
+		return news.isEmpty()? null: news.get(0);
 	}
 }
