@@ -1,10 +1,5 @@
 package com.tcc.dao.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 import com.tcc.dao.INewsDAO;
@@ -20,8 +15,13 @@ public class NewsDAO extends AbstractDAO<NewsModel> implements INewsDAO {
 
 	@Override
 	public Long save(NewsModel newModel) {
-		String sql = "INSERT INTO news(title,content,categoryid) VALUE(?,?,?)";
-		return insert(sql, newModel.getTitle(),newModel.getContent(),newModel.getCategoryId());
+		StringBuilder sql = new StringBuilder("INSERT INTO news(title,");
+		sql.append(" thumbnail, shortDescription, content, categoryid,");
+		sql.append(" createdDate, createdBy)");
+		sql.append(" VALUE(?,?,?,?,?,?,?)");
+		return insert(sql.toString(), newModel.getTitle(),newModel.getThumbnail(),
+				newModel.getShortDescription(), newModel.getContent(),
+				newModel.getCategoryId(), newModel.getCreatedDate(), newModel.getCreatedBy());
 	}
 
 	@Override
@@ -29,5 +29,23 @@ public class NewsDAO extends AbstractDAO<NewsModel> implements INewsDAO {
 		String sql = "SELECT * FROM news WHERE id = ?";
 		List<NewsModel> news = query(sql, new NewMapper(), id);
 		return news.isEmpty()? null: news.get(0);
+	}
+
+	@Override
+	public void update(NewsModel updateModel) {
+		StringBuilder sql =  new StringBuilder("UPDATE news ");
+				sql.append("SET title = ?, thumbnail = ?, shortDescription = ?, ");
+				sql.append("content = ?, categoryid = ?, modifiedDate = ?, modifiedBy = ? ");
+				sql.append("WHERE id = ?");
+		update(sql.toString(), updateModel.getTitle(), updateModel.getThumbnail(),
+				updateModel.getShortDescription(),updateModel.getContent(),
+				updateModel.getCategoryId(),updateModel.getModifiedDate(),
+				updateModel.getModifiedBy(),updateModel.getId());
+	}
+
+	@Override
+	public void delete(Long id) {
+		String sql = "DELETE FROM news WHERE id = ?";
+		update(sql,id);
 	}
 }

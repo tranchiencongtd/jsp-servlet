@@ -37,14 +37,27 @@ public class NewAPI extends HttpServlet{
 	
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPut(req, resp);
+		req.setCharacterEncoding("UTF-8");
+		resp.setContentType("application/json");
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		NewsModel newUpdate = HttpUtil.of(req.getReader()).toModel(NewsModel.class);
+		newUpdate = newService.update(newUpdate);
+		mapper.writeValue(resp.getOutputStream(), newUpdate);
 	}
 	
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doDelete(req, resp);
+		req.setCharacterEncoding("UTF-8");
+		resp.setContentType("application/json");
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		NewsModel news = HttpUtil.of(req.getReader()).toModel(NewsModel.class);
+		newService.delete(news.getIds());
+		
+		mapper.writeValue(resp.getOutputStream(), "{}");
 	}
 		
 }
